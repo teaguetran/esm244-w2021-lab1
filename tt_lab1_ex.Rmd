@@ -1,0 +1,36 @@
+---
+title: "esm244-w2021-lab1"
+author: "Teague Tran"
+date: "1/11/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(here)
+library(sf)
+library(tmap)
+```
+
+### Read in SF trees data
+
+```{r}
+sf_trees <- read_csv(here("data", "sf_trees", "sf_trees.csv"))
+
+```
+
+### Basic wrangling reminders
+
+Find the top 5 highest observation of trees by legal_status, do some wrangling, make a graph
+
+```{r}
+top_5_status <- sf_trees %>% 
+  count(legal_status) %>% 
+  drop_na(legal_status) %>% 
+  rename(tree_count = n) %>% 
+  relocate(tree_count) %>% 
+  slice_max(tree_count, n = 5)
+```
+
+
